@@ -18,6 +18,7 @@ echo "Iniciando backend (.NET API)..."
   export ASPNETCORE_ENVIRONMENT=Development
   dotnet restore
   dotnet run --launch-profile https
+
 ) &
 BACK_PID=$!
 

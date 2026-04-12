@@ -15,7 +15,6 @@ Si querés solo backend:
 ./start-dev.sh
 ```
 
-## Comportamiento
 - Siempre intenta levantar primero `LeagueManager.Api` con:
   - `ASPNETCORE_ENVIRONMENT=Development`
   - `dotnet restore`
