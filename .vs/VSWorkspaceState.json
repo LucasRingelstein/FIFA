@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\LeagueManager.Api",
+    "\\LeagueManager.Api\\Dtos\\Importaciones",
+    "\\LeagueManager.Api\\Dtos\\Jugadores",
+    "\\LeagueManager.Api\\Dtos\\Rankings"
+  ],
+  "SelectedNode": "\\LeagueManager.Api\\appsettings.Development.json",
+  "PreviewInSolutionExplorer": false
+}
