@@ -15,8 +15,10 @@ fi
 echo "Iniciando backend (.NET API)..."
 (
   cd "$API_DIR"
+  export ASPNETCORE_ENVIRONMENT=Development
   dotnet restore
-  dotnet run
+  dotnet run --launch-profile https
+
 ) &
 BACK_PID=$!
 

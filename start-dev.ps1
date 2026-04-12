@@ -16,7 +16,8 @@ if (-not (Test-Path $apiPath)) {
 
 # Backend
 Write-Host 'Iniciando backend (.NET API)...' -ForegroundColor Green
-Start-Process -FilePath 'powershell' -ArgumentList @('-NoExit','-Command',"Set-Location '$apiPath'; dotnet restore; dotnet run") | Out-Null
+Start-Process -FilePath 'powershell' -ArgumentList @('-NoExit','-Command',"Set-Location '$apiPath'; $env:ASPNETCORE_ENVIRONMENT='Development'; dotnet restore; dotnet run --launch-profile https") | Out-Null
+
 
 if ($BackendOnly) {
     Write-Host 'BackendOnly activo: no se intentará levantar frontend.' -ForegroundColor Yellow
