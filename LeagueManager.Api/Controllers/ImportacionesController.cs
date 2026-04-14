@@ -9,12 +9,10 @@ namespace LeagueManager.Api.Controllers;
 public class ImportacionesController : ControllerBase
 {
     private readonly IExcelImportService _excelImportService;
-    private readonly IImportacionService _importacionService;
 
-    public ImportacionesController(IExcelImportService excelImportService, IImportacionService importacionService)
+    public ImportacionesController(IExcelImportService excelImportService)
     {
         _excelImportService = excelImportService;
-        _importacionService = importacionService;
     }
 
     [HttpPost("preview")]
@@ -31,17 +29,9 @@ public class ImportacionesController : ControllerBase
     }
 
     [HttpPost("confirmar")]
-    [ProducesResponseType(typeof(ConfirmImportResponseDto), StatusCodes.Status200OK)]
-    public async Task<ActionResult<ConfirmImportResponseDto>> Confirmar([FromBody] ConfirmImportRequestDto request, CancellationToken cancellationToken)
+    public ActionResult Confirmar([FromBody] ConfirmImportRequestDto request)
     {
-        try
-        {
-            var result = await _importacionService.ConfirmarAsync(request, cancellationToken);
-            return Ok(result);
-        }
-        catch (InvalidOperationException ex)
-        {
-            return BadRequest(new { mensaje = ex.Message });
-        }
+        return StatusCode(StatusCodes.Status501NotImplemented,
+            new { mensaje = "Endpoint base creado. En el próximo paso se implementa el guardado definitivo y recálculo de puntajes.", request.NombreArchivo });
     }
 }
