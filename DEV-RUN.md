@@ -16,6 +16,7 @@ Si querés solo backend:
 ```
 
 ## Comportamiento
+
 - Siempre intenta levantar primero `LeagueManager.Api` con:
   - `ASPNETCORE_ENVIRONMENT=Development`
   - `dotnet restore`
