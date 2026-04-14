@@ -13,7 +13,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<INombreNormalizer, NombreNormalizer>();
 builder.Services.AddScoped<IExcelImportService, ExcelImportService>();
-builder.Services.AddScoped<IImportacionService, ImportacionService>();
 builder.Services.AddScoped<IRankingService, RankingService>();
 
 var app = builder.Build();
