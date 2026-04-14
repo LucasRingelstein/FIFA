@@ -1,5 +1,5 @@
 import { http } from './http';
-import type { ConfirmImportRequest, ConfirmImportResponse, ImportPreviewResponse } from '../types/importaciones';
+import type { ImportPreviewResponse } from '../types/importaciones';
 
 export async function previewImportacion(archivo: File): Promise<ImportPreviewResponse> {
   const formData = new FormData();
@@ -9,10 +9,5 @@ export async function previewImportacion(archivo: File): Promise<ImportPreviewRe
     headers: { 'Content-Type': 'multipart/form-data' }
   });
 
-  return data;
-}
-
-export async function confirmarImportacion(payload: ConfirmImportRequest): Promise<ConfirmImportResponse> {
-  const { data } = await http.post<ConfirmImportResponse>('/importaciones/confirmar', payload);
   return data;
 }

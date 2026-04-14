@@ -23,8 +23,7 @@ public class ImportacionService : IImportacionService
 
     public async Task<ConfirmImportResponseDto> ConfirmarAsync(ConfirmImportRequestDto request, CancellationToken cancellationToken = default)
     {
-        var inputFilas = request.Filas.Count > 0 ? request.Filas : (request.Rows ?? new List<ConfirmImportRowDto>());
-        var filas = inputFilas.Where(x => !string.IsNullOrWhiteSpace(x.Jugador)).ToList();
+        var filas = request.Filas.Where(x => !string.IsNullOrWhiteSpace(x.Jugador)).ToList();
         if (filas.Count == 0)
         {
             throw new InvalidOperationException("No hay filas válidas para importar.");
@@ -32,11 +31,9 @@ public class ImportacionService : IImportacionService
 
         var fechaPartido = request.FechaPartido ?? DateOnly.FromDateTime(DateTime.UtcNow);
         var rival = string.IsNullOrWhiteSpace(request.Rival) ? "Sin Rival" : request.Rival.Trim();
-        var categoria = request.CategoriaPlantel ?? Enums.CategoriaPlantel.Mayor;
-        var modoCarga = string.IsNullOrWhiteSpace(request.ModoCarga) ? "excel" : request.ModoCarga.Trim().ToLowerInvariant();
 
         var exists = await _db.Partidos.AnyAsync(
-            x => x.FechaPartido == fechaPartido && x.Rival == rival && x.CategoriaPlantel == categoria,
+            x => x.FechaPartido == fechaPartido && x.Rival == rival && x.CategoriaPlantel == request.CategoriaPlantel,
             cancellationToken);
 
         if (exists)
@@ -48,7 +45,7 @@ public class ImportacionService : IImportacionService
         {
             FechaPartido = fechaPartido,
             Rival = rival,
-            CategoriaPlantel = categoria,
+            CategoriaPlantel = request.CategoriaPlantel,
             ArchivoOriginal = request.NombreArchivo ?? $"manual-{DateTime.UtcNow:yyyyMMddHHmmss}.xlsx",
             FechaImportacion = DateTime.UtcNow
         };
@@ -73,7 +70,7 @@ public class ImportacionService : IImportacionService
                 {
                     Nombre = row.Jugador.Trim(),
                     NombreNormalizado = nombreNormalizado,
-                    CategoriaBase = categoria,
+                    CategoriaBase = request.CategoriaPlantel,
                     PosicionPreferida = row.Posicion,
                     Activo = true,
                     FechaAlta = DateTime.UtcNow
@@ -110,7 +107,7 @@ public class ImportacionService : IImportacionService
             FilasProcesadas = rendimientos.Count,
             JugadoresNuevos = jugadoresNuevos,
             PartidoId = partido.Id,
-            Observaciones = $"Modo: {modoCarga}"
+            Observaciones = $"Modo: {request.ModoCarga}"
         });
 
         await _db.SaveChangesAsync(cancellationToken);
