@@ -25,28 +25,3 @@ export interface ImportPreviewResponse {
   advertencias: string[];
   filas: ImportPreviewRow[];
 }
-
-export interface ConfirmImportRow {
-  jugador: string;
-  posicion?: string;
-  valoracion?: number;
-  goles: number;
-  asistencias: number;
-  esSuplente: boolean;
-  jugo: boolean;
-}
-
-export interface ConfirmImportRequest {
-  modoCarga: 'excel' | 'manual';
-  categoriaPlantel: CategoriaPlantel;
-  nombreArchivo?: string;
-  rival?: string;
-  fechaPartido?: string;
-  filas: ConfirmImportRow[];
-}
-
-export interface ConfirmImportResponse {
-  partidoId: number;
-  filasGuardadas: number;
-  jugadoresNuevos: number;
-}
